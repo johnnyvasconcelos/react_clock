@@ -5,6 +5,11 @@ import './App.scss';
 export class App extends React.Component {
   timerId = 0;
 
+  state = {
+    hasClock: true,
+    clockName: 'Clock-0',
+  };
+
   handleAddClock = (event: MouseEvent) => {
     event.preventDefault(); // not to show the context menu
     this.setState({ hasClock: true });
@@ -14,11 +19,6 @@ export class App extends React.Component {
     this.setState({ hasClock: false });
   };
 
-  state = {
-    hasClock: true,
-    clockName: 'Clock-0',
-  };
-
   componentDidMount() {
     function getRandomName(): string {
       const value = Date.now().toString().slice(-4);
@@ -26,13 +26,13 @@ export class App extends React.Component {
       return `Clock-${value}`;
     }
 
-    document.addEventListener('contextmenu', this.handleAddClock);
+    document.addEventListener('contextmenu', this.handleRemoveClock);
 
     this.timerId = window.setInterval(() => {
       this.setState({ clockName: getRandomName() });
     }, 3300);
 
-    document.addEventListener('click', this.handleRemoveClock);
+    document.addEventListener('click', this.handleAddClock);
   }
 
   componentWillUnmount() {
