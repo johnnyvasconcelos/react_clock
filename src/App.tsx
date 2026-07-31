@@ -10,12 +10,12 @@ export class App extends React.Component {
     clockName: 'Clock-0',
   };
 
-  handleAddClock = (event: MouseEvent) => {
-    event.preventDefault(); // not to show the context menu
+  handleAddClock = () => {
     this.setState({ hasClock: true });
   };
 
-  handleRemoveClock = () => {
+  handleRemoveClock = (event: MouseEvent) => {
+    event.preventDefault(); // not to show the context menu
     this.setState({ hasClock: false });
   };
 
