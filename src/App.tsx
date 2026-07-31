@@ -5,18 +5,19 @@ import './App.scss';
 export class App extends React.Component {
   timerId = 0;
 
+  handleAddClock = (event: MouseEvent) => {
+    event.preventDefault(); // not to show the context menu
+    this.setState({ hasClock: true });
+  };
+
+  handleRemoveClock = () => {
+    this.setState({ hasClock: false });
+  };
+
   state = {
     hasClock: true,
     clockName: 'Clock-0',
   };
-
-  handleAddClock() {
-    this.setState({ hasClock: true });
-  }
-
-  handleRemoveClock() {
-    this.setState({ hasClock: false });
-  }
 
   componentDidMount() {
     function getRandomName(): string {
@@ -25,19 +26,13 @@ export class App extends React.Component {
       return `Clock-${value}`;
     }
 
-    document.addEventListener('contextmenu', (event: MouseEvent) => {
-      event.preventDefault(); // not to show the context menu
-      this.handleRemoveClock();
-      // put your code here
-    });
+    document.addEventListener('contextmenu', this.handleAddClock);
 
     this.timerId = window.setInterval(() => {
       this.setState({ clockName: getRandomName() });
     }, 3300);
 
-    document.addEventListener('click', () => {
-      this.handleAddClock();
-    });
+    document.addEventListener('click', this.handleRemoveClock);
   }
 
   componentWillUnmount() {
