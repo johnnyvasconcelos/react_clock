@@ -9,6 +9,7 @@ export class Clock extends React.Component<{ name: string }> {
   };
 
   componentDidMount() {
+    this.setState({ today: new Date() });
     this.clockId = window.setInterval(() => {
       this.setState({ today: new Date() });
       // eslint-disable-next-line no-console
