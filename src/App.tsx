@@ -7,13 +7,9 @@ export class App extends React.Component {
   state = {
     today: new Date(),
     clockName: 'Clock-0',
+    showClock: true,
     // This code starts a timer
   };
-
-  /*
-  // eslint-disable-next-line no-console
-  console.log('some message');
-  */
 
   componentDidMount() {
     function getRandomName(): string {
@@ -24,7 +20,19 @@ export class App extends React.Component {
 
     this.timerId = window.setInterval(() => {
       this.setState({ clockName: getRandomName() });
+      // eslint-disable-next-line no-console
+      console.log('some message');
     }, 3300);
+
+    document.addEventListener('contextmenu', (event: MouseEvent) => {
+      event.preventDefault(); // not to show the context menu
+      this.setState({ showClock: false });
+      // put your code here
+    });
+
+    document.addEventListener('click', () => {
+      this.setState({ showClock: true });
+    });
   }
 
   componentWillUnmount() {
@@ -36,13 +44,15 @@ export class App extends React.Component {
     return (
       <div className="App">
         <h1>React clock</h1>
-        <div className="Clock">
-          <strong className="Clock__name">{this.state.clockName}</strong>
-          {' time is '}
-          <span className="Clock__time">
-            {this.state.today.toUTCString().slice(-12, -4)}
-          </span>
-        </div>
+        {this.state.showClock && (
+          <div className="Clock">
+            <strong className="Clock__name">{this.state.clockName}</strong>
+            {' time is '}
+            <span className="Clock__time">
+              <span>{this.state.today.toUTCString().slice(-12, -4)}</span>
+            </span>
+          </div>
+        )}
       </div>
     );
   }
