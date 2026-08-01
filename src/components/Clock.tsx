@@ -9,9 +9,13 @@ export class Clock extends React.Component<{ name: string }> {
   };
 
   componentDidMount() {
-    this.setState({ today: new Date() });
+    const currentData = new Date();
+
+    this.setState({ today: currentData });
     this.clockId = window.setInterval(() => {
-      this.setState({ today: new Date() });
+      const nextData = new Date();
+
+      this.setState({ today: nextData });
       // eslint-disable-next-line no-console
       console.log(this.state.today.toUTCString().slice(-12, -4));
     }, 1000);
